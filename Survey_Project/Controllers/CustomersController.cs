@@ -1,24 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Survey_Project.Data;
+using Survey_Project.Models;
 
 namespace Survey_Project.Controllers
 {
     public class CustomersController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public CustomersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET: Customers
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customerProfile = _context.Customer.Where(c => c.IdentityUserId == userId).ToList();
+           
+            if(customerProfile.Count == 0)
+            {
+                return RedirectToAction("Create", "Customers");
+            }
+
+            var customer = _context.Customer.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            return View(customer);
         }
 
         // GET: Customers/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
+            return View(customer);
         }
 
         // GET: Customers/Create
@@ -30,41 +58,50 @@ namespace Survey_Project.Controllers
         // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Customer customer) //maybe bind?
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
+                _context.Add(customer);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            return View(customer);
         }
 
         // GET: Customers/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var customer = _context.Customers.FindAsync(id);
+
+            return View(customer);
         }
 
         // POST: Customers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Customer customer)
         {
-            try
+           if( id != customer.Id)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                
+                    _context.Update(customer);
+                    _context.SaveChanges();
+                
             }
+            return View(customer);
         }
 
         // GET: Customers/Delete/5
