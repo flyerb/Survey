@@ -22,5 +22,7 @@ namespace Survey_Project.Models
          public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
 
+        public IList<CustomerSurvey> customerSurveys { get; set; }
+
     }
 }

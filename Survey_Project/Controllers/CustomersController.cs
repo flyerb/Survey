@@ -26,14 +26,14 @@ namespace Survey_Project.Controllers
         public ActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customerProfile = _context.Customer.Where(c => c.IdentityUserId == userId).ToList();
+            var customerProfile = _context.Customers.Where(c => c.IdentityUserId == userId).ToList();
            
             if(customerProfile.Count == 0)
             {
                 return RedirectToAction("Create", "Customers");
             }
 
-            var customer = _context.Customer.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
             return View(customer);
         }
 
