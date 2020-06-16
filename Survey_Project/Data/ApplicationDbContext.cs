@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Survey_Project.Models;
 
 namespace Survey_Project.Data
 {
@@ -25,6 +26,10 @@ namespace Survey_Project.Data
             }
             );
         }
+
+        public DbSet<Customer> Customers;
+
+        public DbSet<Survey_Project.Models.Customer> Customer { get; set; }
     }
 }
 //We can further improve the organization of our code
