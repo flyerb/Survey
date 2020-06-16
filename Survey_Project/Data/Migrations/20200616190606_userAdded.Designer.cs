@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Survey_Project.Data;
 
 namespace Survey_Project.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200616190606_userAdded")]
+    partial class userAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace Survey_Project.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "9fa5fdd2-5cbc-45c9-b66b-bc95e32b5b07",
-                            ConcurrencyStamp = "ed9f5c2d-6630-4da1-830b-ba007c9d61d4",
+                            Id = "2e28a956-c2d3-4c28-a9f7-e60e430fd490",
+                            ConcurrencyStamp = "7a561ab7-87de-4676-85b5-808f5ae656b6",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "049fdac9-fafc-4a04-883e-9e175b219ed1",
-                            ConcurrencyStamp = "35fc6c5d-8612-4cee-b383-0866caa82a62",
+                            Id = "5e4e280a-ca2c-4c66-b773-4ebf134bdb61",
+                            ConcurrencyStamp = "ecaedfa8-ebf6-464e-a9be-7751a564f096",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -233,7 +235,7 @@ namespace Survey_Project.Data.Migrations
 
             modelBuilder.Entity("Survey_Project.Models.Customer", b =>
                 {
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -253,35 +255,11 @@ namespace Survey_Project.Data.Migrations
                     b.Property<int>("ZipCode")
                         .HasColumnType("int");
 
-                    b.HasKey("CustomerId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("Survey_Project.Models.Survey", b =>
-                {
-                    b.Property<int>("SurveyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Quarter")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SurveyId");
-
-                    b.ToTable("Surveys");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -23,11 +23,17 @@ namespace Survey_Project.Data
             {
                 Name = "Admin",
                 NormalizedName = "ADMIN"
+            },
+            new IdentityRole
+            {
+                Name = "Customer",
+                NormalizedName = "CUSTOMER"
             }
             );
         }
 
-        public DbSet<Customer> Customers;
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
 
         public DbSet<Survey_Project.Models.Customer> Customer { get; set; }
     }

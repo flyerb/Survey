@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using Survey_Project.Models;
 
 namespace Survey_Project.Controllers
 {
+    [Authorize(Roles = "Customer")]
     public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -89,7 +91,7 @@ namespace Survey_Project.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Customer customer)
         {
-           if( id != customer.Id)
+           if( id != customer.CustomerId)
             {
                 return NotFound();
             }
