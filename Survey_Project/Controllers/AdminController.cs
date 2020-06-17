@@ -1,18 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Survey_Project.Data;
+using Survey_Project.Models;
 
 namespace Survey_Project.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+            public AdminController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var Admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            return View(Admin);
+            
         }
 
         // GET: Admin/Details/5
@@ -30,18 +46,18 @@ namespace Survey_Project.Controllers
         // POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Admin admin)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                admin.IdentityUserId = userId;
+                _context.Add(admin);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
+            return View(admin);
         }
 
         // GET: Admin/Edit/5
