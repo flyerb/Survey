@@ -20,6 +20,9 @@ namespace Survey_Project.Models
         [Display(Name = "Fiscal Quarter")]
         public string Quarter { get; set; }
 
-        public IList<CustomerSurvey> customerSurveys { get; set; }
+        [ForeignKey("AdminId")]
+
+        public Admin Admin { get; set; }
+        public int AdminId { get; set; }
     }
 }

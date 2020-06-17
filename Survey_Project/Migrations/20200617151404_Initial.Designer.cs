@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Survey_Project.Data;
 
-namespace Survey_Project.Data.Migrations
+namespace Survey_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200616190606_userAdded")]
-    partial class userAdded
+    [Migration("20200617151404_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace Survey_Project.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2e28a956-c2d3-4c28-a9f7-e60e430fd490",
-                            ConcurrencyStamp = "7a561ab7-87de-4676-85b5-808f5ae656b6",
+                            Id = "a962dfb3-4f3a-4274-b966-cad4f59cc2c6",
+                            ConcurrencyStamp = "fdba7c2e-3374-4d41-8c7a-21b6fc28d982",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5e4e280a-ca2c-4c66-b773-4ebf134bdb61",
-                            ConcurrencyStamp = "ecaedfa8-ebf6-464e-a9be-7751a564f096",
+                            Id = "2e7c5cd6-7594-4ca9-b09e-d4f6c1465098",
+                            ConcurrencyStamp = "6d8179c5-94f6-47d6-a675-9a233130c896",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -235,7 +235,7 @@ namespace Survey_Project.Data.Migrations
 
             modelBuilder.Entity("Survey_Project.Models.Customer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("CustomerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -255,11 +255,97 @@ namespace Survey_Project.Data.Migrations
                     b.Property<int>("ZipCode")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("CustomerId");
 
                     b.HasIndex("IdentityUserId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Options", b =>
+                {
+                    b.Property<int>("OptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Option")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OptionId");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Options");
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Questions", b =>
+                {
+                    b.Property<int>("QuestionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Question")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SurveyId")
+                        .HasColumnType("int");
+
+                    b.HasKey("QuestionId");
+
+                    b.HasIndex("SurveyId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Responses", b =>
+                {
+                    b.Property<int>("ResponsesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OptionsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ResponsesId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("OptionsId");
+
+                    b.ToTable("Responses");
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Survey", b =>
+                {
+                    b.Property<int>("SurveyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Quarter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SurveyId");
+
+                    b.ToTable("Surveys");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -318,6 +404,35 @@ namespace Survey_Project.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Options", b =>
+                {
+                    b.HasOne("Survey_Project.Models.Questions", "question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Questions", b =>
+                {
+                    b.HasOne("Survey_Project.Models.Survey", "survey")
+                        .WithMany()
+                        .HasForeignKey("SurveyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Survey_Project.Models.Responses", b =>
+                {
+                    b.HasOne("Survey_Project.Models.Customer", "customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId");
+
+                    b.HasOne("Survey_Project.Models.Options", "option")
+                        .WithMany()
+                        .HasForeignKey("OptionsId");
                 });
 #pragma warning restore 612, 618
         }

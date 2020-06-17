@@ -13,11 +13,11 @@ using Survey_Project.Models;
 namespace Survey_Project.Controllers
 {
     [Authorize(Roles = "Customer")]
-    public class CustomersController : Controller
+    public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CustomersController(ApplicationDbContext context)
+        public CustomerController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -26,19 +26,13 @@ namespace Survey_Project.Controllers
         public ActionResult Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customerProfile = _context.Customers.Where(c => c.IdentityUserId == userId).ToList();
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
            
-            if(customerProfile.Count == 0)
-            {
-                return RedirectToAction("Create", "Customers");
-            }
-
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
             return View(customer);
         }
 
-        // GET: Customers/Details/5
-        public ActionResult Details(int id)
+        // GET: Customers/Details/5 
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
@@ -75,7 +69,7 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {

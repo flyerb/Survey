@@ -12,17 +12,14 @@ namespace Survey_Project.Models
         [Key]
         public int ResponsesId { get; set; }
 
-        [ForeignKey("QuestionId")]
-        public Questions question { get; set; }
-        public int QuestionId { get; set; }
 
-        [ForeignKey("SurveyId")]
-        public Survey survey { get; set; }
-        public int SurveyId { get; set; }
+        [ForeignKey("OptionsId")]
+        public Options option { get; set; }
+        public int? OptionsId { get; set; }
 
         [ForeignKey("CustomerId")]
 
         public Customer customer { get; set; }
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
     }
 }

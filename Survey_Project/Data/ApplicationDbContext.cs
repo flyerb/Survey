@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using com.sun.tools.doclets.formats.html.resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -14,19 +15,19 @@ namespace Survey_Project.Data
             : base(options)
         {
         }
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
+
+        public DbSet<Options> Options { get; set; }
+        public DbSet<Questions> Questions { get; set; }
+
+        public DbSet<Responses> Responses { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<CustomerSurvey>()
-            //.HasKey(cs => new {cs.CustomerId, cs.SurveyId });
-            //builder.Entity<CustomerSurvey>()
-            //    .HasOne(bc => bc.customer)
-            //    .WithMany(b => b.survey)
-            //    .HasForeignKey(bc => bc.CustomerId);
-            //builder.Entity<CustomerSurvey>()
-            //    .HasOne(bc => bc.survey)
-            //    .WithMany(c => c.customer)
-            //    .HasForeignKey(bc => bc.SurveyId);
-            builder.Entity<CustomerSurvey>().HasKey(cs => new { cs.CustomerId, cs.SurveyId });
+
 
             base.OnModelCreating(builder);
             builder.Entity<IdentityRole>()
@@ -44,12 +45,6 @@ namespace Survey_Project.Data
             );
         }
 
-        public DbSet<Customer> Customers { get; set; }
-        public DbSet<Survey> Surveys { get; set; }
-
-        public DbSet<CustomerSurvey> customerSurveys { get; set; }
-
-       // public DbSet<Survey_Project.Models.Customer> Customer { get; set; }
     }
 }
 //We can further improve the organization of our code
