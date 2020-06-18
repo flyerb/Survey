@@ -34,11 +34,9 @@ namespace Survey_Project.Controllers
             {
                 return RedirectToAction("Create");
             }
-
-            var allsurveys = _context.Surveys.Where(c => c.AdminId == admin.AdminId).ToList();
-
-            return View(allsurveys);
-
+             var allsurveys = _context.Surveys.Where(c => c.AdminId == admin.AdminId).ToList();
+                return View(allsurveys);
+        
         }
 
         // GET: Admin/Details/5

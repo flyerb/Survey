@@ -22,12 +22,12 @@ namespace Survey_Project.ActionFilters
                 {
                     if (_claimsPrincipal.IsInRole("Customer"))
                     {
-                        context.Result = new RedirectToActionResult("Create",
+                        context.Result = new RedirectToActionResult("Index",
                         "Customer", null);
                     }
                 else if (_claimsPrincipal.IsInRole("Admin"))
                     {
-                        context.Result = new RedirectToActionResult("Create",
+                        context.Result = new RedirectToActionResult("Index",
                         "Admin", null);
                     }
                 }
