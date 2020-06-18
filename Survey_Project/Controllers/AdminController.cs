@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Survey_Project.Data;
 using Survey_Project.Models;
 
@@ -29,6 +30,11 @@ namespace Survey_Project.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
 
+            if (admin == null)
+            {
+                return RedirectToAction("Create");
+            }
+
             var allsurveys = _context.Surveys.Where(c => c.AdminId == admin.AdminId).ToList();
 
             return View(allsurveys);
@@ -42,8 +48,11 @@ namespace Survey_Project.Controllers
             {
                 return NotFound();
             }
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
+            var admin = _context.Admins
+              .Include(e => e.IdentityUser)
+              .FirstOrDefault(m => m.AdminId == id);
+
 
             if (admin == null)
             {
@@ -57,6 +66,7 @@ namespace Survey_Project.Controllers
         // GET: Admin/Create
         public ActionResult Create()
         {
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -67,7 +77,6 @@ namespace Survey_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                //link the Customer IdenityUser FK to the AspNetUser who is logged in
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 admin.IdentityUserId = userId;
                 _context.Add(admin);
@@ -77,52 +86,92 @@ namespace Survey_Project.Controllers
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
             return View(admin);
         }
-    
+
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admin = await _context.Admins.FindAsync(id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
+            return View(admin);
         }
 
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(int id, Admin admin)
         {
-            try
+            if (id != admin.AdminId)
             {
-                // TODO: Add update logic here
+                return NotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(admin);
+                    await _context.SaveChangesAsync(); 
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AdminExists(admin.AdminId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(admin);
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var admin = _context.Admins
+                .Include(c => c.IdentityUser)
+                .FirstOrDefault(m => m.AdminId == id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
         }
 
         // POST: Admin/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var admin = _context.Customers.Find(id);
+            _context.Customers.Remove(admin);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        private bool AdminExists(int id)
+        {
+            return _context.Admins.Any(e => e.AdminId == id);
         }
     }
 }
