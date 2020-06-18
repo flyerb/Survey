@@ -19,11 +19,10 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Survey
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
-            var survey = _context.Surveys.Where(c => c.SurveyId == id).SingleOrDefault();
-
-            return View(survey);
+            
+            return View();
         
         }
 
@@ -50,18 +49,17 @@ namespace Survey_Project.Controllers
         // POST: Survey/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Survey survey)
         {
-            try
-            {
-                // TODO: Add insert logic here
 
+            if (ModelState.IsValid)
+            {
+                _context.Add(survey);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+   
+            return View(survey);
         }
 
         // GET: Survey/Edit/5

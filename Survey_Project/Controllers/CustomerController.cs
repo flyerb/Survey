@@ -7,12 +7,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Survey_Project.Data;
 using Survey_Project.Models;
 
 namespace Survey_Project.Controllers
 {
-    [Authorize(Roles = "Customer")]
+   // [Authorize(Roles = "Customer")]
     public class CustomerController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -23,24 +24,33 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Customers
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-           
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+
+            if(customer ==  null)
+            {
+                return RedirectToAction("Create");
+            }
+
             return View(customer);
         }
 
         // GET: Customers/Details/5 
-        public ActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var customer = await _context.Customers.Include(c => c.IdentityUser).FirstOrDefaultAsync(m =>m.CustomerId == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
 
             return View(customer);
         }
@@ -48,20 +58,21 @@ namespace Survey_Project.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
         // POST: Customers/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Customer customer) //maybe bind?
+       // [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Customer customer) //maybe bind?
         {
             if (ModelState.IsValid)
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 customer.IdentityUserId = userId;
                 _context.Add(customer);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
@@ -69,21 +80,25 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var customer = _context.Customers.FindAsync(id);
-
+            var customer = await _context.Customers.FindAsync(id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
 
         // POST: Customers/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, Customer customer)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Customer customer)
         {
            if( id != customer.CustomerId)
             {
@@ -92,35 +107,61 @@ namespace Survey_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                
+                try
+                {
                     _context.Update(customer);
-                    _context.SaveChanges();
-                
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CustomerExists(customer.CustomerId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(customer);
         }
 
         // GET: Customers/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var customer = _context.Customers
+                .Include(c => c.IdentityUser)
+                .FirstOrDefault(m => m.CustomerId == id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
         }
+
 
         // POST: Customers/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            var customer = _context.Customers.Find(id);
+            _context.Customers.Remove(customer);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+        private bool CustomerExists(int id)
+        {
+            return _context.Customers.Any(e => e.CustomerId == id);
         }
     }
 }

@@ -12,12 +12,12 @@ using Survey_Project.Models;
 
 namespace Survey_Project.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-            public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -25,17 +25,34 @@ namespace Survey_Project.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var Admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
-            return View(Admin);
-            
+            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
+            var allsurveys = _context.Surveys.Where(c => c.AdminId == admin.AdminId).ToList();
+
+            return View(allsurveys);
+
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
         }
+
 
         // GET: Admin/Create
         public ActionResult Create()
@@ -46,19 +63,21 @@ namespace Survey_Project.Controllers
         // POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Admin admin)
+        public async Task<IActionResult> Create([Bind("AdminId,FirstName,LastName")] Admin admin)
         {
             if (ModelState.IsValid)
             {
+                //link the Customer IdenityUser FK to the AspNetUser who is logged in
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 admin.IdentityUserId = userId;
                 _context.Add(admin);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
             return View(admin);
         }
+    
 
         // GET: Admin/Edit/5
         public ActionResult Edit(int id)

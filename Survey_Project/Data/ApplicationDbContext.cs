@@ -44,15 +44,6 @@ namespace Survey_Project.Data
                 Name = "Customer",
                 NormalizedName = "CUSTOMER"
             }
-
-               //builder.Entity<Admin>()
-               // .HasData(
-               //     new Admin
-               //     {
-               //         AdminId = 1,
-               //         FirstName = "Bailee",
-               //         LastName = "Bineshiinh"
-               //     }
             ); 
         }
 
