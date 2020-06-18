@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Survey_Project.Models
 {
-    public class Options
+    public class Question
     {
         [Key]
-        public int OptionId { get; set; }
-
-        public string Option { get; set; }
-
-        [ForeignKey("QuestionId")]
-
-        public Questions question { get; set; }
         public int QuestionId { get; set; }
+        public string QuestionString { get; set; }
+
+        [ForeignKey("SurveyId")]
+
+        public Survey survey { get; set; }
+        public int SurveyId { get; set; }
+
     }
 }

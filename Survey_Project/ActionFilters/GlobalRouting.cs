@@ -25,13 +25,13 @@ namespace Survey_Project.ActionFilters
                         context.Result = new RedirectToActionResult("Create",
                         "Customer", null);
                     }
-                    else if (_claimsPrincipal.IsInRole("Admin"))
+                else if (_claimsPrincipal.IsInRole("Admin"))
                     {
                         context.Result = new RedirectToActionResult("Create",
                         "Admin", null);
                     }
                 }
-            }
+        }
             public void OnActionExecuted(ActionExecutedContext context)
             {
             }

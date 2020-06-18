@@ -21,10 +21,10 @@ namespace Survey_Project.Data
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Survey> Surveys { get; set; }
 
-        public DbSet<Options> Options { get; set; }
-        public DbSet<Questions> Questions { get; set; }
+        public DbSet<Option> Options { get; set; }
+        public DbSet<Question> Questions { get; set; }
 
-        public DbSet<Responses> Responses { get; set; }
+        public DbSet<Response> Responses { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)

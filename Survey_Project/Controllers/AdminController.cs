@@ -28,7 +28,7 @@ namespace Survey_Project.Controllers
         {
 
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+            var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
 
             if (admin == null)
             {
