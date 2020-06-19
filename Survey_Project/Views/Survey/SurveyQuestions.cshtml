@@ -1,0 +1,46 @@
+﻿@model Survey_Project.Models.QuestionViewModel
+
+@{
+    ViewData["Title"] = "SurveyQuestions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>SurveyQuestions</h1>
+
+<h4>Survey</h4>
+<hr />
+@*<p>
+    <a asp-action="AnswerQuestion" asp-route-id="@Model.Discussion.Id">Answer This Question</a>
+</p>*@
+<div>
+    <dt class="col-sm-10">
+        @Html.DisplayFor(model => model.Option)
+    </dt>
+    <dt class="col-sm-10">
+        @Html.DisplayFor(model => model.Question)
+    </dt>
+</div>
+<br>
+<br>
+<table class="table">
+
+    @*<tbody>
+        @foreach (var item in Model.Option)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>*@
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

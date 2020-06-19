@@ -79,7 +79,7 @@ namespace Survey_Project.Controllers
                 admin.IdentityUserId = userId;
                 _context.Add(admin);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", admin.IdentityUserId);
             return View(admin);

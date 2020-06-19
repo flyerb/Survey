@@ -9,7 +9,8 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Survey" asp-action="Create">Create Survey</a>
+
 </p>
 <table class="table">
     <thead>
@@ -27,7 +28,8 @@
         </tr>
     </thead>
     <tbody>
-        @*@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Title)
@@ -38,12 +40,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CreationDate)
                 </td>
-                <td>*@
-        @*<a asp-action="Edit" asp-route-id="@Model.SurveyId">Edit</a> |
-        <a asp-action="Details" asp-route-id="@Model.AdminId">Details</a> |
-        <a asp-action="Delete" asp-route-id="@Model.AdminId">Delete</a>*@
-        @*</td>
-            </tr>*@
+                @*<td>
+                <a asp-action="Edit" asp-route-id="@Model.SurveyId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@Model.AdminId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@Model.AdminId">Delete</a>
+                </td>*@
+            </tr>
+
+            <a asp-controller="Survey" asp-action="SurveyQuestions">Survey Questions</a>
         }
     </tbody>
 </table>
