@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Survey_Project.Data;
 using Survey_Project.Models;
 
@@ -66,15 +67,40 @@ namespace Survey_Project.Controllers
             return View(survey);
         }
 
+        //public ActionResult SurveyQuestions(Survey survey, Question question)
+        //{
+        //    var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).FirstOrDefault();
+        //    var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
+
+        //   // var set = _context.Options.Include(s => s.QuestionId == question.QuestionId).ToList();
+
+        //    QuestionViewModel qvm = new QuestionViewModel();
+        //    qvm.Questions = questions;
+        //    qvm.Options = options;
+
+        //    return View(qvm);
+        //}
+
         public ActionResult SurveyQuestions(Survey survey, Question question)
         {
-            var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).ToList();
+            var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).SingleOrDefault();
             var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
             QuestionViewModel qvm = new QuestionViewModel();
-            qvm.Question = questions;
-            qvm.Option = options;
+            qvm.Questions = questions;
+            qvm.Options = options;
+
             return View(qvm);
         }
+
+        [HttpPost, ActionName("SurveyQuestions")]
+        public ActionResult SurveyQuestions(QuestionViewModel questionViewModel)
+        {
+
+            _context.Add(questionViewModel);
+            _context.SaveChanges();
+            return RedirectToAction("Create");
+        }
+
 
         // GET: Survey/Edit/5
         public ActionResult Edit(int id)

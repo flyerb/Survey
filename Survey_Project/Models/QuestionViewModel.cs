@@ -7,7 +7,9 @@ namespace Survey_Project.Models
 {
     public class QuestionViewModel
     {
-        public List<Question> Question { get; set; }
-        public List<Option> Option { get; set; }
+        public Question Questions { get; set; }
+
+        public List<Option> Options { get; set; }
     }
+
 }
