@@ -7,9 +7,12 @@ namespace Survey_Project.Models
 {
     public class QuestionViewModel
     {
-        public Question Questions { get; set; }
+        public Question Question { get; set; } 
+        public string OptionOne { get; set; }
+        public string OptionTwo { get; set; }
+        public string OptionThree { get; set; }
+        public string OptionFour{ get; set; }
 
-        public List<Option> Options { get; set; }
     }
 
 }

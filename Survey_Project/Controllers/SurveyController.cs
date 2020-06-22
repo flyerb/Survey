@@ -50,8 +50,7 @@ namespace Survey_Project.Controllers
 
         // POST: Survey/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(Survey survey, int id)
+        public ActionResult Create(Survey survey)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
@@ -59,64 +58,84 @@ namespace Survey_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(survey);
+                _context.Surveys.Add(survey);
                 _context.SaveChanges();
-                return RedirectToAction();
+           
             }
    
-            return View(survey);
+            return RedirectToAction("SurveyQuestions", new { id = survey.SurveyId });
         }
 
-        //public ActionResult SurveyQuestions(Survey survey, Question question)
-        //{
-        //    var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).FirstOrDefault();
-        //    var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
-
-        //   // var set = _context.Options.Include(s => s.QuestionId == question.QuestionId).ToList();
-
-        //    QuestionViewModel qvm = new QuestionViewModel();
-        //    qvm.Questions = questions;
-        //    qvm.Options = options;
-
-        //    return View(qvm);
-        //}
-
-        //public ActionResult SurveyQuestions(Survey survey, Question question)
-        //{
-        //    var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).SingleOrDefault();
-        //    var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
-        //    QuestionViewModel qvm = new QuestionViewModel();
-        //    qvm.Questions = questions;
-        //    qvm.Options = options;
-
-        //    return View(qvm);
-        //}
-
-        //[HttpPost, ActionName("SurveyQuestions")]
-        //public ActionResult SurveyQuestions(QuestionViewModel questionViewModel)
-        //{
-
-        //    _context.Add(questionViewModel);
-        //    _context.SaveChanges();
-        //    return RedirectToAction("Create");
-        //}
-
-        public ActionResult SurveyQuestions(Survey survey, Question question)
+        public ActionResult SurveyQuestions(int id, Question question)
         {
-            var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).FirstOrDefault();
-            var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
-
-            // var set = _context.Options.Include(s => s.QuestionId == question.QuestionId).ToList();
-
+            
             QuestionViewModel qvm = new QuestionViewModel();
-            qvm.Questions = questions;
-            qvm.Options = options;
+
+            qvm.Question = new Question();
+           
+            qvm.Question.SurveyId = id;
+
+      
 
             return View(qvm);
         }
 
+
+        [HttpPost , ActionName ("SurveyQuestions")]
+        public ActionResult SurveyQuestions(QuestionViewModel qvm)
+        {
+            
+
+            if (ModelState.IsValid)
+            {
+
+                _context.Add(qvm.Question);
+                _context.SaveChanges();
+
+                Option optionOne = new Option();
+                Option optionTwo = new Option();
+                Option optionThree = new Option();
+                Option optionFour = new Option();
+
+                optionOne.Choice = qvm.OptionOne;
+                optionTwo.Choice = qvm.OptionTwo;
+                optionThree.Choice = qvm.OptionThree;
+                optionFour.Choice = qvm.OptionFour;
+
+                optionOne.QuestionId = qvm.Question.QuestionId;
+                optionTwo.QuestionId = qvm.Question.QuestionId;
+                optionThree.QuestionId = qvm.Question.QuestionId;
+                optionFour.QuestionId = qvm.Question.QuestionId;
+
+
+                _context.Add(optionOne);
+                _context.Add(optionTwo);
+                _context.Add(optionThree);
+                _context.Add(optionFour);
+                _context.SaveChanges();
+                // instantiate three Option objects
+                // assign the new Option objects their values
+                // add options to DB and save changes again
+
+            }
+            return View();
+
+
+            //var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).FirstOrDefault();
+            //var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
+
+            //var set = _context.Options.Include(s => s.QuestionId == question.QuestionId).ToList();
+
+            //QuestionViewModel qvm = new QuestionViewModel();
+            //qvm.Questions = questions;
+            //qvm.Options = options;
+
+            //return View(qvm);
+        }
+
         public ActionResult AddOption()
         {
+           
             return View();
         }
 
@@ -124,7 +143,8 @@ namespace Survey_Project.Controllers
 
         public ActionResult AddOption(Question question)
         {
-            var option = _context.Options.Where(o => o.QuestionId == question.QuestionId).SingleOrDefault();
+            var option = _context.Options.Where(s => s.OptionId == 0).FirstOrDefault();
+            option.OptionId = question.QuestionId;
             _context.Add(option);
             _context.SaveChanges();
 
