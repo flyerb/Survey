@@ -1,4 +1,4 @@
-﻿@model Survey_Project.Models.Survey
+﻿@model Survey_Project.Models.QuestionViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,43 +8,45 @@
 <h1>Edit</h1>
 
 <h4>Survey</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SurveyId" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreationDate" class="control-label"></label>
-                <input asp-for="CreationDate" class="form-control" />
-                <span asp-validation-for="CreationDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Quarter" class="control-label"></label>
-                <input asp-for="Quarter" class="form-control" />
-                <span asp-validation-for="Quarter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
 <div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <form asp-action="SurveyQuestions">
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        <input type="hidden" asp-for="Question.SurveyId" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="@Model.Question.QuestionString" class="control-label"></label>
+            <input asp-for="@Model.Question.QuestionString" class="form-control" />
+            <span asp-validation-for="@Model.Question.QuestionString" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.OptionOne" class="control-label"></label>
+            <input asp-for="@Model.OptionOne" class="form-control" />
+            <span asp-validation-for="@Model.OptionOne" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.OptionTwo" class="control-label"></label>
+            <input asp-for="@Model.OptionTwo" class="form-control" />
+            <span asp-validation-for="@Model.OptionTwo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.OptionThree" class="control-label"></label>
+            <input asp-for="@Model.OptionThree" class="form-control" />
+            <span asp-validation-for="@Model.OptionThree" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.OptionFour" class="control-label"></label>
+            <input asp-for="@Model.OptionFour" class="form-control" />
+            <span asp-validation-for="@Model.OptionFour" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+
+            <input type="submit" value="Submit" class="btn btn-primary" />
+        </div>
+
+    </form>
+
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
