@@ -47,13 +47,13 @@
                 @Html.DisplayFor(modelItem => item.Quarter)
             </td>
             <td>
-                <a asp-controller="Survey" asp-action="SurveyQuestions">Create Survey Questions</a>
+                <a asp-controller="Survey" asp-action="Details">View Survey Questions</a>
             </td>
-            @*<td>
-        <a asp-action="Edit" asp-route-id="@Model.SurveyId">Edit</a> |
-        <a asp-action="Details" asp-route-id="@Model.AdminId">Details</a> |
-        <a asp-action="Delete" asp-route-id="@Model.AdminId">Delete</a>
-        </td>*@
+            <td>
+        <a asp-action="Edit" asp-route-id="@item.SurveyId">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.SurveyId">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.SurveyId">Delete</a>
+        </td>
         </tr>
 
            

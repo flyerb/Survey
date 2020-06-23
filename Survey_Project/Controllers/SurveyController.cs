@@ -36,10 +36,11 @@ namespace Survey_Project.Controllers
                 return NotFound();
             }
 
-            //var options = _context.Options.Find(i =>i.OptionId).
-            //var survey = _context.Surveys.Where(s => s.SurveyId ==
+            var survey = _context.Surveys.Where(s => s.SurveyId == id).FirstOrDefault();
+            var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).ToList();
+            //var options = _context.Options.Where(o => o.QuestionId == questions
 
-            return View();
+            return View(questions);
         }
 
         // GET: Survey/Create
@@ -143,26 +144,29 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Survey/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            if( id == null)
+            {
+                return NotFound();
+            }
+
+            var survey = _context.Surveys.Where(s => s.SurveyId == id).FirstOrDefault();
+
+            return View(survey);
         }
 
         // POST: Survey/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var survey = _context.Surveys.Where(s => s.SurveyId == id).FirstOrDefault();
+            _context.Surveys.Remove(survey);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+           
         }
     }
 }
