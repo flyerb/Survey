@@ -72,10 +72,7 @@ namespace Survey_Project.Controllers
             QuestionViewModel qvm = new QuestionViewModel();
 
             qvm.Question = new Question();
-           
             qvm.Question.SurveyId = id;
-
-      
 
             return View(qvm);
         }
@@ -99,7 +96,7 @@ namespace Survey_Project.Controllers
 
                 optionOne.Choice = qvm.OptionOne;
                 optionTwo.Choice = qvm.OptionTwo;
-                optionThree.Choice = qvm.OptionThree;
+                optionThree.Choice = qvm.OptionThree; 
                 optionFour.Choice = qvm.OptionFour;
 
                 optionOne.QuestionId = qvm.Question.QuestionId;
@@ -118,40 +115,9 @@ namespace Survey_Project.Controllers
                 // add options to DB and save changes again
 
             }
-            return View();
-
-
-            //var questions = _context.Questions.Where(q => q.QuestionId == survey.SurveyId).FirstOrDefault();
-            //var options = _context.Options.Where(o => o.QuestionId == question.QuestionId).ToList();
-
-            //var set = _context.Options.Include(s => s.QuestionId == question.QuestionId).ToList();
-
-            //QuestionViewModel qvm = new QuestionViewModel();
-            //qvm.Questions = questions;
-            //qvm.Options = options;
-
-            //return View(qvm);
+            return RedirectToAction("SurveyQuestions", new { id = qvm.Question.SurveyId});
         }
 
-        public ActionResult AddOption()
-        {
-           
-            return View();
-        }
-
-        [HttpPost, ActionName("AddOption")]  
-
-        public ActionResult AddOption(Question question)
-        {
-            var option = _context.Options.Where(s => s.OptionId == 0).FirstOrDefault();
-            option.OptionId = question.QuestionId;
-            _context.Add(option);
-            _context.SaveChanges();
-
-            return RedirectToAction("SurveyQuestions"); 
-
-        }
-         
 
         // GET: Survey/Edit/5
         public ActionResult Edit(int id)
