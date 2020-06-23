@@ -163,5 +163,25 @@ namespace Survey_Project.Controllers
         {
             return _context.Customers.Any(e => e.CustomerId == id);
         }
+
+        public ActionResult TakeSurvey(int id) ///pass in survey id
+        {
+            QuestionViewModel qvm = new QuestionViewModel();
+
+
+            qvm.Question.SurveyId = id;
+
+            return View(qvm);
+        }
+        public ActionResult TakeSurvey(Survey survey, Response response)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            customer.CustomerId = response.ResponsesId;
+
+
+            return View();
+        }
+
     }
 }
