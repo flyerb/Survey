@@ -67,6 +67,8 @@ namespace Survey_Project.Controllers
             return RedirectToAction("SurveyQuestions", new { id = survey.SurveyId });
         }
 
+
+        // GET: SurveyQuestions/Create
         public ActionResult SurveyQuestions(int id, Question question)
         {
             
@@ -78,7 +80,7 @@ namespace Survey_Project.Controllers
             return View(qvm);
         }
 
-
+        // POST: SurveyQuestions/Create
         [HttpPost , ActionName ("SurveyQuestions")]
         public ActionResult SurveyQuestions(QuestionViewModel qvm)
         {

@@ -86,6 +86,29 @@ namespace Survey_Project.Controllers
         }
 
 
+        // GET: Client/Create
+        public ActionResult AddClient()
+        {
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
+            return View();
+        }
+
+        // POST: Client/Create
+        [HttpPost]
+        public async Task<IActionResult> AddClient(Customer customer) 
+        {
+            if (ModelState.IsValid)
+            {
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
+                _context.Add(customer);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
+            return View(customer);
+        }
+
         // GET: Admin/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
