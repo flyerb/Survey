@@ -15,6 +15,9 @@ namespace Survey_Project.Models
         public string Title { get; set; }
         public string Description { get; set; }
 
+        
+        //DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Date Created")]
         public DateTime CreationDate { get; set; }
 
