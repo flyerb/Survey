@@ -34,7 +34,8 @@ namespace Survey_Project.Controllers
                 return RedirectToAction("Create");
             }
 
-            return View(customer);
+            return RedirectToAction("TakeSurvey", new { id = customer.CustomerId });
+            //return View(customer);
         }
 
         // GET: Customers/Details/5 
@@ -167,12 +168,14 @@ namespace Survey_Project.Controllers
         public ActionResult TakeSurvey(int id) ///pass in survey id
         {
             QuestionViewModel qvm = new QuestionViewModel();
+            Response response = new Response();
 
-
-            qvm.Question.SurveyId = id;
+            response.ResponsesId = id;
 
             return View(qvm);
         }
+        
+        [HttpPost]
         public ActionResult TakeSurvey(Survey survey, Response response)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);

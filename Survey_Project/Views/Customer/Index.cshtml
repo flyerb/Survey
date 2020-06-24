@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Survey_Project.Models.Customer>
+﻿@model Survey_Project.Models.Customer
 
 @{
     ViewData["Title"] = "Index";
@@ -25,14 +25,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.ZipCode)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Custo)
-            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.IdentityUser)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@*@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
@@ -46,14 +46,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IdentityUser.Id)
             </td>*@
-            <td>
-                <a asp-action="TakeSurvey" asp-route-id="@item.CustomerId">Take Survey</a> |
+            @*<td>
+                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
-            </td>
+            </td>*@
         </tr>
 }
     </tbody>

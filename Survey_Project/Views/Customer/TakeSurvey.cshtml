@@ -1,4 +1,4 @@
-﻿@model Survey_Project.Models.Question
+﻿@model Survey_Project.Models.QuestionViewModel
 
 @{
     ViewData["Title"] = "TakeSurvey";
@@ -11,21 +11,39 @@
     <h4>Question</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.QuestionString)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Question)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.QuestionString)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Question)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.survey)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OptionOne)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.survey.SurveyId)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OptionOne)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OptionTwo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OptionTwo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OptionThree)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OptionThree)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OptionFour)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OptionFour)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.QuestionId">Edit</a> |
+    @*<a asp-action="Edit" asp-route-id="@Model.Question.QuestionId">Edit</a> |*@ @*//next question?*@
     <a asp-action="Index">Back to List</a>
 </div>
