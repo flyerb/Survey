@@ -172,6 +172,9 @@ namespace Survey_Project.Controllers
 
             response.ResponsesId = id;
 
+            //var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).ToList();
+            //var thisOption = _context.Options.Where(o => o.OptionId == questionID).ToList();
+
             return View(qvm);
         }
         

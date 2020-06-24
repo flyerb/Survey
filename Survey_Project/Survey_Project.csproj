@@ -8,6 +8,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200618134817_ChangedNamingS.cs" />
     <Compile Remove="Migrations\20200618134817_ChangedNamingS.Designer.cs" />
+    <Compile Remove="Models\Email.cs" />
+    <Compile Remove="Models\EmailAddress.cs" />
+    <Compile Remove="Models\EmailConfiguration.cs" />
+    <Compile Remove="Models\EmailMessage.cs" />
   </ItemGroup>
 
   <ItemGroup>
