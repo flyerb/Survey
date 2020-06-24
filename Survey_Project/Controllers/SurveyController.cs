@@ -82,7 +82,7 @@ namespace Survey_Project.Controllers
 
         // POST: SurveyQuestions/Create
         [HttpPost , ActionName ("SurveyQuestions")]
-        public ActionResult SurveyQuestions(QuestionViewModel qvm)
+        public ActionResult SurveyQuestions(QuestionViewModel qvm, bool addAnotherQuestion)
         {
             
 
@@ -117,8 +117,18 @@ namespace Survey_Project.Controllers
                 // assign the new Option objects their values
                 // add options to DB and save changes again
 
+                if (addAnotherQuestion == true)
+                {
+                    return View(qvm);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+
             }
-            return RedirectToAction("SurveyQuestions", new { id = qvm.Question.SurveyId});
+            return RedirectToAction("SurveyQuestions", new { id = qvm.Question.SurveyId });
+
         }
 
 
