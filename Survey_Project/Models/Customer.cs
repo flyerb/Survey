@@ -19,7 +19,7 @@ namespace Survey_Project.Models
         // optional info for demographics
 
         [ForeignKey("IdentityUser")]
-         public string IdentityUserId { get; set; }
+        public string IdentityUserId { get; set; }
         public IdentityUser IdentityUser { get; set; }
 
       

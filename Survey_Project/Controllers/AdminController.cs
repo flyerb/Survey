@@ -204,57 +204,57 @@ namespace Survey_Project.Controllers
 
         // email mailkit stuff
 
-        //public ActionResult SendMail()
-        //{
-        //    var message = new MimeMessage();
-        //    message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress("to email name", " to email address")));
-        //    message.From.AddRange(emailMessage.FromAddresses.Select(x => new MailboxAddress("from email name", "from email address")));
+        public ActionResult SendMail()
+        {
+            var message = new MimeMessage();
+            message.To.AddRange(emailMessage.ToAddresses.Select(x => new MailboxAddress("to email name", " to email address")));
+            message.From.AddRange(emailMessage.FromAddresses.Select(x => new MailboxAddress("from email name", "from email address")));
 
-        //    message.Subject = "here write email subject";
+            message.Subject = "here write email subject";
 
-        //    message.Body = new TextPart(TextFormat.Html)
-        //    {
-        //        Text = emailMessage.Content
-        //    };
+            message.Body = new TextPart(TextFormat.Html)
+            {
+                Text = emailMessage.Content
+            };
 
-        //    using (var emailClient = new SmtpClient())
-        //    {
-        //        emailClient.Connect("smtp.gmail.com", 465, true);
+            using (var emailClient = new SmtpClient())
+            {
+                emailClient.Connect("smtp.gmail.com", 465, true);
 
-        //        emailClient.Authenticate("User@mydomain.com", "pass123");
+                emailClient.Authenticate("User@mydomain.com", "pass123");
 
-        //        emailClient.Send(message);
+                emailClient.Send(message);
 
-        //        emailClient.Disconnect(true);
+                emailClient.Disconnect(true);
 
-        //        return "";
+                return "";
 
-        //    }
-        //}
+            }
+        }
 
-        //public List<EmailMessage> ReceiveEmail(int maxCount = 15)
-        //{
-        //    using (var emailClient = new Pop3Client())
-        //    {
-        //        emailClient.Connect("Pop Server", "Pop Port", true);
+        public List<EmailMessage> ReceiveEmail(int maxCount = 15)
+        {
+            using (var emailClient = new Pop3Client())
+            {
+                emailClient.Connect("Pop Server", "Pop Port", true);
 
-        //        emailClient.AuthenticationMechanisms.Remove("XOAUTH2"); emailClient.Authenticate("Pop Username", "Pop Password");
+                emailClient.AuthenticationMechanisms.Remove("XOAUTH2"); emailClient.Authenticate("Pop Username", "Pop Password");
 
-        //        List<EmailMessage> emails = new List<EmailMessage>();
-        //        for (int i = 0; i < emailClient.Count && i < maxCount; i++)
-        //        {
-        //            var message = emailClient.GetMessage(i);
-        //            var emailMessage = new EmailMessage
-        //            {
-        //                Content = !string.IsNullOrEmpty(message.HtmlBody) ?
-        //                message.HtmlBody : message.TextBody,
-        //                Subject = message.Subject
-        //            };
-        //            emailMessage.ToAddresses.AddRange(message.To.Select(x => (MailboxAddress)x).Select(x => new EmailAddress { Address = x.Address, Name = x.Name }));
-        //            emailMessage.FromAddresses.AddRange(message.From.Select(x => (MailboxAddress)x).Select(x => new EmailAddress { Address = x.Address, Name = x.Name }));
-        //        }
-        //        return emails;
-        //    }
-        //}
+                List<EmailMessage> emails = new List<EmailMessage>();
+                for (int i = 0; i < emailClient.Count && i < maxCount; i++)
+                {
+                    var message = emailClient.GetMessage(i);
+                    var emailMessage = new EmailMessage
+                    {
+                        Content = !string.IsNullOrEmpty(message.HtmlBody) ?
+                        message.HtmlBody : message.TextBody,
+                        Subject = message.Subject
+                    };
+                    emailMessage.ToAddresses.AddRange(message.To.Select(x => (MailboxAddress)x).Select(x => new EmailAddress { Address = x.Address, Name = x.Name }));
+                    emailMessage.FromAddresses.AddRange(message.From.Select(x => (MailboxAddress)x).Select(x => new EmailAddress { Address = x.Address, Name = x.Name }));
+                }
+                return emails;
+            }
+        }
     }
 }
