@@ -169,11 +169,15 @@ namespace Survey_Project.Controllers
         {
             QuestionViewModel qvm = new QuestionViewModel();
             Response response = new Response();
+            Question question = new Question();
 
             response.ResponsesId = id;
+            response.ResponsesId = question.QuestionId;
+      
 
-            //var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).ToList();
-            //var thisOption = _context.Options.Where(o => o.OptionId == questionID).ToList();
+            var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).FirstOrDefault();
+            thisQuestion = qvm.Question;
+            //var thisOption = _context.Options.Where(o => o.OptionId == thisQuestion.QuestionId).ToList();
 
             return View(qvm);
         }
