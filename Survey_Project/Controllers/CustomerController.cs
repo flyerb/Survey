@@ -190,23 +190,25 @@ namespace Survey_Project.Controllers
             qvm.OptionTwo = foundChoices[1].Choice;
             qvm.OptionThree = foundChoices[2].Choice;
             qvm.OptionFour = foundChoices[3].Choice;
-
+            
             return View(qvm);
         }
         
         [HttpPost]
         public ActionResult TakeSurvey(string choice)
         {
+            Response response = new Response();
+            
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            response.option = _context.Options.Where(o => o.Choice == choice).FirstOrDefault();
+           // var optionId = response.option.OptionId;
 
-            Response response = new Response();
-            response.option = new Option();
+            
 
-            _context.Responses.Add(response);
-            _context.SaveChanges();
 
             response.CustomerId = customer.CustomerId;
+     
             response.option.Choice = choice;
 
 

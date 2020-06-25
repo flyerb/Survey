@@ -51,10 +51,10 @@
            <form asp-controller="Customer" asp-action="TakeSurvey" method="post" role="form" class="ui large form">>
                <select name="choice">
                    <option value="">Select One</option>
-                   <option value="OptionOne">@Html.DisplayFor(model => model.OptionOne)</option>
-                   <option value="OptionTwo">@Html.DisplayFor(model => model.OptionTwo)</option>
-                   <option value="OptionThree">@Html.DisplayFor(model => model.OptionThree)</option>
-                   <option value="OptionFour">@Html.DisplayFor(model => model.OptionFour)</option>
+                   <option value="@Model.OptionOne">@Html.DisplayFor(model => model.OptionOne)</option>
+                   <option value="@Model.OptionTwo">@Html.DisplayFor(model => model.OptionTwo)</option>
+                   <option value="@Model.OptionThree">@Html.DisplayFor(model => model.OptionThree)</option>
+                   <option value="@Model.OptionFour">@Html.DisplayFor(model => model.OptionFour)</option>
                </select>
  
                <input type="submit" value="TakeSurvey">
