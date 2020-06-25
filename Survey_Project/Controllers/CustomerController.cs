@@ -38,6 +38,14 @@ namespace Survey_Project.Controllers
             return View(customer) ;
         }
 
+        public ActionResult ViewSurvey()
+        {
+            var allSurveys = _context.Surveys.ToList();
+            return View(allSurveys);
+        }
+
+
+
         // GET: Customers/Details/5 
         public async Task<IActionResult> Details(int? id)
         {
@@ -165,17 +173,16 @@ namespace Survey_Project.Controllers
             return _context.Customers.Any(e => e.CustomerId == id);
         }
 
-        public ActionResult TakeSurvey() ///pass in survey id
+        public ActionResult TakeSurvey(int id) ///pass in survey id
         {
-            //var allSurveys = _context.Surveys.ToList();
-            //qvm.Question = new Question();
+            QuestionViewModel qvm = new QuestionViewModel();
+            qvm.Question = new Question();
+            qvm.Question.SurveyId = id;
 
+            var foundQuestions = _context.Questions.Where(f => f.SurveyId == id).FirstOrDefault();
+            qvm.Question.QuestionString = foundQuestions.QuestionString;
 
-            //var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).FirstOrDefault();
-            //thisQuestion = qvm.Question;
-            //var thisOption = _context.Options.Where(o => o.OptionId == thisQuestion.QuestionId).ToList();
-
-            return View();
+            return View(qvm);
         }
         
         [HttpPost]

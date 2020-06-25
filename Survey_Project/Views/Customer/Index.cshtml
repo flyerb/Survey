@@ -1,4 +1,4 @@
-﻿@model Survey_Project.Models.Survey
+﻿@model Survey_Project.Models.Customer
 
 @{
     ViewData["Title"] = "Index";
@@ -8,21 +8,34 @@
 <h1>Index</h1>
 
 <p>
-    
+    <a asp-action="ViewSurvey">View Survey</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.FirstName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdentityUser)
+            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 @*@foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.LastName)
@@ -36,11 +49,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IdentityUser.Id)
             </td>*@
-    <td>
-        <a asp-controller="Admin" asp-action="ChooseCustomer" asp-route-id="SurveyId">Send Survey</a> |
-        @*<a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
-        <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>*@
-    </td>
+            @*<td>
+                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
+            </td>*@
         </tr>
 }
     </tbody>
