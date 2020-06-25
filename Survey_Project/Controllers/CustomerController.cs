@@ -182,6 +182,12 @@ namespace Survey_Project.Controllers
             var foundQuestions = _context.Questions.Where(f => f.SurveyId == id).FirstOrDefault();
             qvm.Question.QuestionString = foundQuestions.QuestionString;
 
+
+            var foundChoices = _context.Options.Where(f => f.QuestionId == foundQuestions.QuestionId).FirstOrDefault();
+            qvm.OptionOne = foundChoices.Choice;
+          
+
+
             return View(qvm);
         }
         
