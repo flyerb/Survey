@@ -195,11 +195,11 @@ namespace Survey_Project.Controllers
         }
         
         [HttpPost]
-        public ActionResult TakeSurvey(Survey survey, Response response)
+        public ActionResult TakeSurvey(bool checkResp)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-            customer.CustomerId = response.ResponsesId;
+
+           //if(checkResp)
+           //     _context.Responses.Add(id)
 
 
             return View();
