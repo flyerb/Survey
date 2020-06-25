@@ -177,7 +177,7 @@ namespace Survey_Project.Controllers
             var survey = _context.Surveys.Where(s => s.SurveyId == id).FirstOrDefault();
             _context.Surveys.Remove(survey);
             _context.SaveChanges();
-            return RedirectToAction("SurveyQuestions");
+            return RedirectToAction("Index", "Admin");
 
 
         }

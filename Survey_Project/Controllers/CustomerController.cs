@@ -24,17 +24,24 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Survey survey)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            
+
+            Response response = new Response();
+
+            response.CustomerId = customer.CustomerId;
+
+
 
             if(customer ==  null)
             {
                 return RedirectToAction("Create");
             }
 
-            return RedirectToAction("TakeSurvey", new { id = customer.CustomerId });
+            return RedirectToAction("TakeSurvey", new { id = response.ResponsesId });
             //return View(customer);
         }
 
@@ -168,15 +175,12 @@ namespace Survey_Project.Controllers
         public ActionResult TakeSurvey(int id) ///pass in survey id
         {
             QuestionViewModel qvm = new QuestionViewModel();
-            Response response = new Response();
-            Question question = new Question();
 
-            response.ResponsesId = id;
-            response.ResponsesId = question.QuestionId;
-      
+            //qvm.Question = new Question();
+          
 
-            var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).FirstOrDefault();
-            thisQuestion = qvm.Question;
+            //var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).FirstOrDefault();
+            //thisQuestion = qvm.Question;
             //var thisOption = _context.Options.Where(o => o.OptionId == thisQuestion.QuestionId).ToList();
 
             return View(qvm);
