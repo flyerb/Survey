@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1;
 using Survey_Project.Data;
 using Survey_Project.Models;
 
@@ -183,10 +184,12 @@ namespace Survey_Project.Controllers
             qvm.Question.QuestionString = foundQuestions.QuestionString;
 
 
-            var foundChoices = _context.Options.Where(f => f.QuestionId == foundQuestions.QuestionId).FirstOrDefault();
-            qvm.OptionOne = foundChoices.Choice;
-          
+            var foundChoices = _context.Options.Where(f => f.QuestionId == foundQuestions.QuestionId).ToList();
 
+            qvm.OptionOne = foundChoices[0].Choice;
+            qvm.OptionTwo = foundChoices[1].Choice;
+            qvm.OptionThree = foundChoices[2].Choice;
+            qvm.OptionFour = foundChoices[3].Choice;
 
             return View(qvm);
         }
