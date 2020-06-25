@@ -202,8 +202,17 @@ namespace Survey_Project.Controllers
             return _context.Admins.Any(e => e.AdminId == id);
         }
 
+        public ActionResult ChooseCustomer(int id)
+        {
+            var allCustomers = _context.Customers.ToList();
+            Response response = new Response();
 
 
+            var thisSurvey = _context.Surveys.Where(s => s.SurveyId == id).FirstOrDefault();
+
+
+            return RedirectToAction("TakeSurvey","Customer");
+        }
 
         // email mailkit stuff
 

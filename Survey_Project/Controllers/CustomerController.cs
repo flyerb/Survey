@@ -24,25 +24,18 @@ namespace Survey_Project.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index(Survey survey)
+        public async Task<IActionResult> Index()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
-            
-
-            Response response = new Response();
-
-            response.CustomerId = customer.CustomerId;
 
 
-
-            if(customer ==  null)
+            if (customer ==  null)
             {
                 return RedirectToAction("Create");
             }
 
-            return RedirectToAction("TakeSurvey", new { id = response.ResponsesId });
-            //return View(customer);
+            return View(customer) ;
         }
 
         // GET: Customers/Details/5 
@@ -172,18 +165,17 @@ namespace Survey_Project.Controllers
             return _context.Customers.Any(e => e.CustomerId == id);
         }
 
-        public ActionResult TakeSurvey(int id) ///pass in survey id
+        public ActionResult TakeSurvey() ///pass in survey id
         {
-            QuestionViewModel qvm = new QuestionViewModel();
-
+            //var allSurveys = _context.Surveys.ToList();
             //qvm.Question = new Question();
-          
+
 
             //var thisQuestion = _context.Questions.Where(q => q.QuestionId == id).FirstOrDefault();
             //thisQuestion = qvm.Question;
             //var thisOption = _context.Options.Where(o => o.OptionId == thisQuestion.QuestionId).ToList();
 
-            return View(qvm);
+            return View();
         }
         
         [HttpPost]
