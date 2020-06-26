@@ -214,6 +214,15 @@ namespace Survey_Project.Controllers
             return View(allCustomers);
         }
 
+        public ActionResult Compare(string FirstSelection)
+        {
+            var selectedQuarter = _context.Surveys.Where(s => s.Quarter == FirstSelection).FirstOrDefault();
+
+            //var oneQuarter = _context.Surveys.Find(o
+        
+            return View();
+        }
+
 
         public ActionResult GoogleCharts()
         {

@@ -136,9 +136,22 @@ namespace Survey_Project.Controllers
         // GET: Survey/Edit/5
         public ActionResult Edit(int id)
         {
+            QuestionViewModel qvm = new QuestionViewModel();
+            qvm.Question = new Question();
+            qvm.Question.SurveyId = id;
 
-            return View();
+            var foundQuestions = _context.Questions.Where(f => f.SurveyId == id).FirstOrDefault();
+            qvm.Question.QuestionString = foundQuestions.QuestionString;
 
+
+            var foundChoices = _context.Options.Where(f => f.QuestionId == foundQuestions.QuestionId).ToList();
+
+            qvm.OptionOne = foundChoices[0].Choice;
+            qvm.OptionTwo = foundChoices[1].Choice;
+            qvm.OptionThree = foundChoices[2].Choice;
+            qvm.OptionFour = foundChoices[3].Choice;
+
+            return View(qvm);
         }
 
         // POST: Survey/Edit/5
