@@ -11,7 +11,8 @@
 <p>
     <a asp-controller="Survey" asp-action="Create">Create Survey</a>
     <a asp-controller="Admin" asp-action="AddClient">Add Client</a>
-     @*<a asp-controller="Admin" asp-action="SendMail"> Send Email</a>*@
+    <a asp-controller="Admin" asp-action="GoogleCharts">Chart</a>
+    @*<a asp-controller="Admin" asp-action="SendMail"> Send Email</a>*@
 
 </p>
 <table class="table">
@@ -50,7 +51,7 @@
             </td>
             <td>
         <a asp-controller="Survey" asp-action="Edit" asp-route-id="@item.SurveyId">Edit</a> |
-  
+        <a asp-controller="Survey" asp-action="Details" asp-route-id="@item.SurveyId">Details</a>
         <a asp-controller="Survey" asp-action="Delete" asp-route-id="@item.SurveyId">Delete</a>
         <a asp-controller="Admin" asp-action="ChooseCustomer" asp-route-id="@item.SurveyId">Send Survey</a>
         </td>

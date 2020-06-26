@@ -214,6 +214,12 @@ namespace Survey_Project.Controllers
             return View(allCustomers);
         }
 
+
+        public ActionResult GoogleCharts()
+        {
+            return View();
+        }
+
         // email mailkit stuff
 
         public void SendMail()
