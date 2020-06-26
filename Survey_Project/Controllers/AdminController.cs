@@ -211,7 +211,7 @@ namespace Survey_Project.Controllers
             var thisSurvey = _context.Surveys.Where(s => s.SurveyId == id).FirstOrDefault();
 
 
-            return RedirectToAction("TakeSurvey","Customer");
+            return View(allCustomers);
         }
 
         // email mailkit stuff

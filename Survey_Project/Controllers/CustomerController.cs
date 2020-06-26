@@ -204,9 +204,6 @@ namespace Survey_Project.Controllers
             response.option = _context.Options.Where(o => o.Choice == choice).FirstOrDefault();
            // var optionId = response.option.OptionId;
 
-            
-
-
             response.CustomerId = customer.CustomerId;
      
             response.option.Choice = choice;
@@ -214,7 +211,7 @@ namespace Survey_Project.Controllers
 
             _context.Responses.Add(response);
             _context.SaveChanges();
-            return View();
+            return RedirectToAction("Index");
         }
 
     }
