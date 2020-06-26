@@ -51,11 +51,12 @@ namespace Survey_Project.Controllers
 
         // POST: Survey/Create
         [HttpPost]
-        public ActionResult Create(Survey survey)
+        public ActionResult Create(Survey survey, string quarter)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var admin = _context.Admins.Where(c => c.IdentityUserId == userId).FirstOrDefault();
             survey.AdminId = admin.AdminId;
+            survey.Quarter = quarter;
 
             if (ModelState.IsValid)
             {
@@ -135,25 +136,26 @@ namespace Survey_Project.Controllers
         // GET: Survey/Edit/5
         public ActionResult Edit(int id)
         {
+
             return View();
+
         }
 
         // POST: Survey/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Question question)
         {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
+            if (ModelState.IsValid)
             {
-                return View();
+                _context.Update(question);
+                _context.SaveChangesAsync();
+
             }
+            return RedirectToAction("Index", "Admin");
         }
+       
 
         // GET: Survey/Delete/5
         public ActionResult Delete(int? id)

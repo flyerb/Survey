@@ -28,16 +28,25 @@
                 <input asp-for="CreationDate" class="form-control" />
                 <span asp-validation-for="CreationDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-4">
                 <label asp-for="Quarter" class="control-label"></label>
-                <input asp-for="Quarter" class="form-control" />
-                <span asp-validation-for="Quarter" class="text-danger"></span>
+                <form asp-controller="Survey" asp-action="Create" method="post" role="form" class="ui large form">
 
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
+                    <select name="quarter">
+                        <option value="">Select One</option>
+                        <option value="2020 2nd Quarter">2020 2nd Quarter</option>
+                        <option value="2020 1st Quarter">2020 1st Quarter</option>
+                        <option value="2019 4th Quarter">2019 4th Quarter</option>
+                        <option value="2019 3rd Quarter">2019 3rd Quarter</option>
+                        <option value="2019 2rd Quarter">2019 2rd Quarter</option>
+                        <option value="2019 1st Quarter">2019 1st Quarter</option>
+                    </select>
+                </form>
+</form>
             </div>
-        </form>
+            <input type="submit" value="Create" class="btn btn-primary" />
+</div>
+        
     <div>
         <a asp-action="Index">Back to List</a>
     </div>

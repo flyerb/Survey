@@ -11,15 +11,15 @@
 
         function drawChart() {
             // Define the chart to be drawn.
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Element');
-            data.addColumn('number', 'Percentage');
-            data.addRows([
-                ['Nitrogen', 0.78],
-                ['Oxygen', 0.21],
-                ['Other', 0.01]
-            ]);
+            var jsonData = $.ajax({
+                url: "jdbc:sqlserver://localhost;integratedSecurity=true;",
+                dataType: "json",
+                async: false
+            }).responseText;
 
+            // Create our data table out of JSON data loaded from server.
+            var data = new google.visualization.DataTable(jsonData);
+            
             // Instantiate and draw the chart.
             var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
             chart.draw(data, null);
@@ -34,3 +34,12 @@
     <!-- Identify where the chart should be drawn. -->
     <div id="myPieChart" style="width:40%; height:30%"></div>
 </body>
+
+   @*//var data = new google.visualization.DataTable();
+            //data.addColumn('string', 'Element');
+            //data.addColumn('number', 'Percentage');
+            //data.addRows([
+            //    ['Nitrogen', 0.78],
+            //    ['Oxygen', 0.21],
+            //    ['Other', 0.01]
+            //]);*@
