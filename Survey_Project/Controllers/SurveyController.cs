@@ -118,7 +118,7 @@ namespace Survey_Project.Controllers
                 // assign the new Option objects their values
                 // add options to DB and save changes again
 
-                if (addAnotherQuestion == true)
+                if (addAnotherQuestion)
                 {
                     return View(qvm);
                 }
