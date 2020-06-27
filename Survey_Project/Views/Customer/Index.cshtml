@@ -4,11 +4,28 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<h1>Hi, @Html.DisplayFor(model => model.FirstName)!</h1>
-<p>
-    <a asp-action="ViewSurvey">View All Surveys</a>
-</p>
-
+    <center>
+        <header>
+            <img src="~/Images/teaHero.jpg" width="700" height="300" style="vertical-align:top">
+        </header>
+        <br />
+        <h1>Hi, @Html.DisplayFor(model => model.FirstName)!</h1>
+    </center>
+    <section>
+        <div>
+            <p>
+                We hope you enjoyed your visit. Please take this quick survey and receive a $5.00 credit on your account. <br />
+                See you soon!
+            </p>
+            <h4>
+                Sincerly, <br />
+                Jane's Tea Shop
+            </h4>
+        </div> 
+        <h3>
+            <center>
+                <a asp-action="ViewSurvey">Click here for the Survey</a>
+            </center>
+        </h3>
+    </section>
 
