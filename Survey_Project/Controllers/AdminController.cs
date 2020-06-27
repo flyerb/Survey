@@ -247,7 +247,7 @@ namespace Survey_Project.Controllers
 
             //InternetAddress test = new InternetAddress();  < --what is an InternetAddress ?
 
-            MailboxAddress test2 = new MailboxAddress("Mike", "zarandazchi@gmail.com"); /* < --hardcoding an address-checking teh overloads to see what parameters work.*/
+            MailboxAddress test2 = new MailboxAddress("Jane's Tea Shop", "zarandazchi@gmail.com"); /* < --hardcoding an address-checking teh overloads to see what parameters work.*/
         
 
             List<MailboxAddress> addresses = new List<MailboxAddress>();
@@ -271,12 +271,21 @@ namespace Survey_Project.Controllers
             message.To.AddRange(addresses);
             message.From.Add(test2);
 
-            message.Subject = "here write email subject";
+            message.Subject = "A message from Jane's Tea Shop";
 
             message.Body = new TextPart(TextFormat.Html)
             {
-                Text = "kjasdfhkjasdh" //changed this from an input box since all emails will be the same 
-            };
+                Text = "Hello! Our records show you recently visited our store. At the tea shop, we value customer satisfaction, so much that if you complete a survey about your most recent visit, a $5.00 discount will be added to your account. Please log in to our website using the e-mail address and password you used to create your account." +
+                "Thanks again and see you soon!" +
+                " "+
+                "Jane's Tea Shop"+
+                "2684 W. Main St."+
+                "Washbury, Wisconsin"+
+                "715-334-0988"
+
+                 //changed this from an input box since all emails will be the same 
+
+            };  
 
             using (var emailClient = new SmtpClient())
             {
