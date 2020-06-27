@@ -231,7 +231,7 @@ namespace Survey_Project.Controllers
 
         // email mailkit stuff
 
-        public void SendMail()
+        public ActionResult SendMail()
         {
 
 
@@ -278,7 +278,7 @@ namespace Survey_Project.Controllers
 
                 emailClient.Disconnect(true);
 
-               /* return ""; */ ///Maybe return view?? return what?
+                return RedirectToAction("Index");
 
             }
         }

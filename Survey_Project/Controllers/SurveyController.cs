@@ -157,12 +157,13 @@ namespace Survey_Project.Controllers
         // POST: Survey/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Question question)
+        public ActionResult Edit(QuestionViewModel qvm)
         {
 
             if (ModelState.IsValid)
             {
-                _context.Update(question);
+                
+                //_context.Update();
                 _context.SaveChangesAsync();
 
             }
