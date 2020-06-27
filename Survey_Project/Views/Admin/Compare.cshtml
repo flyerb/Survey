@@ -1,4 +1,4 @@
-﻿@model Survey_Project.Models.Response
+﻿@model  IEnumerable< Survey_Project.Models.Survey>
 
 @{
     ViewData["Title"] = "Compare";
@@ -34,7 +34,7 @@
         Last year and previous quarter
 
 
-        <dl class="row">
+        @*<dl class="row">
             <dt class="col-sm-2">
                 @Html.DisplayNameFor(model => model.option)
             </dt>
@@ -50,6 +50,6 @@
         </dl>
     </div>
     <div>
-        <a asp-action="Edit" asp-route-id="@Model.ResponsesId">Edit</a> |
+        <a asp-action="Edit" asp-route-id="@Model.ResponsesId">Edit</a> |*@
         <a asp-action="Index">Back to List</a>
     </div>

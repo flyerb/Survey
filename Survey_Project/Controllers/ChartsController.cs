@@ -12,11 +12,9 @@ namespace Survey_Project.Controllers
         [Route("product")]
         public class ProductController : Controller
         {
-            [Route("")]
-            [Route("index")]
-            [Route("~/")]
             public IActionResult Index()
             {
+
                 return View();
             }
         }

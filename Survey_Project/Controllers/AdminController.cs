@@ -216,11 +216,9 @@ namespace Survey_Project.Controllers
 
         public ActionResult Compare(string FirstSelection)
         {
-            var selectedQuarter = _context.Surveys.Where(s => s.Quarter == FirstSelection).FirstOrDefault();
+            var selectedQuarter = _context.Surveys.Where(s => s.Quarter == FirstSelection).ToList();
 
-            //var oneQuarter = _context.Surveys.Find(o
-        
-            return View();
+            return View(selectedQuarter);
         }
 
 
@@ -228,6 +226,13 @@ namespace Survey_Project.Controllers
         {
             return View();
         }
+
+        public IActionResult GetChartData()
+        {
+            var data = _context.Responses.ToList();
+            return Json(data);
+        }
+
 
         // email mailkit stuff
 

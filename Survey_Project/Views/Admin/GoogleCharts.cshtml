@@ -5,30 +5,42 @@
 }
 <head>
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-    <script>
-        google.charts.load('current', { packages: ['corechart'] });
-        google.charts.setOnLoadCallback(drawChart);
+    <div>
+        <script>
+            google.charts.load('current', { packages: ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-            // Define the chart to be drawn.
-            var jsonData = $.ajax({
-                url: "jdbc:sqlserver://localhost;integratedSecurity=true;",
-                dataType: "json",
-                async: false
-            }).responseText;
+            function drawChart() {
+                // Define the chart to be drawn.
+                var options = {};
+                options.url = '@Url.Action("GetChartData","Admin")';
+                options.type = "GET";
+                options.dataType = "json";            
+                options.success = function (data) {                    var chartData = [                        ['Day', 'Hours']                    ];                    $.each(data, function (i, item) {                        chartData.push([item.responsesId.toString(),                        item.optionsId]);                    });                    var chartDataTable = google.visualization.                        arrayToDataTable(chartData);                    var chartOptions = {                        title: "Hours spent per day",                        hAxis: {                            title: 'Hours',                            minValue: 0                        },                        vAxis: {                            title: 'Week Days'                        }                    };                    var chart = new google.visualization.PieChart                        (document.getElementById('myPieChart'));                    chart.draw(chartDataTable, chartOptions);                };
+                options.error = function () {                    $("#msg").html("<h2>Error while using Google Charts!</h2 > ");                };                $.ajax(options);
 
-            // Create our data table out of JSON data loaded from server.
-            var data = new google.visualization.DataTable(jsonData);
-            
-            // Instantiate and draw the chart.
-            var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
-            chart.draw(data, null);
 
-            var piechart = new google.visualization.PieChart(document
-                .getElementById('myPieChart'));
-            piechart.draw(data, piechart_options);
-        }
-    </script>
+
+
+                //var jsonData = $.ajax({
+                //    url: "jdbc:sqlserver://localhost;integratedSecurity=true;",
+                //    dataType: "json",
+                //    async: false
+                //}).responseText;
+
+                // Create our data table out of JSON data loaded from server.
+                //var data = new google.visualization.DataTable(jsonData);
+
+                //// Instantiate and draw the chart.
+                //var chart = new google.visualization.PieChart(document.getElementById('myPieChart'));
+                //chart.draw(data, null);
+
+                //var piechart = new google.visualization.PieChart(document
+                //    .getElementById('myPieChart'));
+                //piechart.draw(data, piechart_options);
+            }
+        </script>
+    </div>
 </head>
 <body>
     <!-- Identify where the chart should be drawn. -->

@@ -6,58 +6,67 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-controller="Survey" asp-action="Create">Create Survey</a>
-    <a asp-controller="Admin" asp-action="AddClient">Add Client</a>
-    <a asp-controller="Admin" asp-action="GoogleCharts">View Chart</a>
-    @*<a asp-controller="Admin" asp-action="SendMail"> Send Email</a>*@
+    <body style="background-image: url('../Images/white.jpg');">
+        <center>
+            <h1>Good Afternoon, Admin!</h1>
+            <p>Surveys should be sent no later than 5 P.M. daily</p>
+        </center>
+        <section>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreationDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Quarter)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreationDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quarter)
+                            </td>
+                            <td>
+                                |<a asp-controller="Survey" asp-action="Edit" asp-route-id="@item.SurveyId">Edit</a> |
+                                @*<a asp-controller="Survey" asp-action="Details" asp-route-id="@item.SurveyId">Details</a>|*@
+                                <a asp-controller="Survey" asp-action="Delete" asp-route-id="@item.SurveyId">Delete</a>|
+                                <a asp-controller="Admin" asp-action="ChooseCustomer" asp-route-id="@item.SurveyId">Send Survey</a>|
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <div>
+                <a asp-controller="Survey" asp-action="Create">Create Survey</a>
+                <a asp-controller="Admin" asp-action="AddClient">Add Client</a>
+                <a asp-controller="Admin" asp-action="GoogleCharts">View Chart</a>
+                <a asp-controller="Admin" asp-action="AddClient">Add Client</a>
+                <a asp-controller="Admin" asp-action="Compare">Compare</a>
+                @*<a asp-controller="Admin" asp-action="SendMail"> Send Email</a>*@
 
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quarter)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quarter)
-            </td>
-            <td>
-        |<a asp-controller="Survey" asp-action="Edit" asp-route-id="@item.SurveyId">Edit</a> |
-        @*<a asp-controller="Survey" asp-action="Details" asp-route-id="@item.SurveyId">Details</a>|*@
-        <a asp-controller="Survey" asp-action="Delete" asp-route-id="@item.SurveyId">Delete</a>|
-        <a asp-controller="Admin" asp-action="ChooseCustomer" asp-route-id="@item.SurveyId">Send Survey</a>|
-        </td>
-        </tr>
+            </div>
+        </section>
 
-
-        }
-    </tbody>
-</table>
+    </body>
