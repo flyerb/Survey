@@ -232,10 +232,12 @@ namespace Survey_Project.Controllers
             //var x = _context.Responses.Where( r=> r.OptionsId )
 
 
-            var data = _context.Responses.ToList();
+            //var data = _context.Responses.ToList();
+
+            var data = _context.Questions.ToList();
             return Json(data);
 
-            //deserialize 
+            //deserialize ????
         }
 
 

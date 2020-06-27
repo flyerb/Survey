@@ -4,34 +4,32 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<body style="background-image: url('../Images/white.jpg');">
 
-<h1>Thank you for participating in the survey!</h1>
+    <body style=" background-image: url('../Images/white.jpg'); background-repeat: no-repeat; background-size: cover;">
 
-<p>
+        <center><h2>Thank you for participating in the survey!</h2></center>
 
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-              
-                <td>
-                    <a asp-controller="Customer" asp-action="TakeSurvey" asp-route-id="@item.SurveyId">Take Survey</a> |
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-</body>
+        <table class="table">
+            @*<thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                </tr>
+            </thead>*@
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+
+                        <td>
+                            <a asp-controller="Customer" asp-action="TakeSurvey" asp-route-id="@item.SurveyId">Take Survey</a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </body>

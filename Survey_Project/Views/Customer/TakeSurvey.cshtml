@@ -7,17 +7,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>TakeSurvey</h1>
+
 
 <div>
-    <h4>Thank you for taking this Survey!</h4>
+    <h4>We Appreciate the FeedBack!</h4>
     <hr />
     <dl class="row">
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Question.QuestionString)
         </dd>
-       <div class="form-group col-md-4">
-           <form asp-controller="Customer" asp-action="TakeSurvey" method="post" role="form" class="ui large form">>
+        <br />
+        
+       <div class="form-group col-md-2">
+           <form asp-controller="Customer" asp-action="TakeSurvey" method="post" role="form" class="ui large form">
+               <br />
                <select name="choice">
                    <option value="">Select One</option>
                    <option value="@Model.OptionOne">@Html.DisplayFor(model => model.OptionOne)</option>
@@ -26,16 +29,13 @@
                    <option value="@Model.OptionFour">@Html.DisplayFor(model => model.OptionFour)</option>
                </select>
  
-               <input type="submit" value="TakeSurvey">
+               <input type="submit" value="Submit">
            </form>
         </div>
-
-
-
 
     </dl>
 </div>
 <div>
     @*<a asp-action="Edit" asp-route-id="@Model.Question.QuestionId">Edit</a> |*@ @*//next question?*@
-    <a asp-action="Index">Back to List</a>
+    
 </div>

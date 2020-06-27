@@ -23,8 +23,8 @@
                         ['Option', 'Choice']
                     ];
                     $.each(data, function (i, item) {
-                        chartData.push([item.responsesId.toString(),
-                        item.optionsId]);
+                        chartData.push([item.QuestionString,
+                        item.QuestionId]);
                     });
                     var chartDataTable = google.visualization.
                         arrayToDataTable(chartData);
