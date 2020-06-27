@@ -229,6 +229,9 @@ namespace Survey_Project.Controllers
 
         public IActionResult GetChartData()
         {
+            //var x = _context.Responses.Where( r=> r.OptionsId )
+
+
             var data = _context.Responses.ToList();
             return Json(data);
         }

@@ -14,10 +14,38 @@
                 // Define the chart to be drawn.
                 var options = {};
                 options.url = '@Url.Action("GetChartData","Admin")';
+                        @*new { id = 0 }*@
                 options.type = "GET";
-                options.dataType = "json";            
-                options.success = function (data) {                    var chartData = [                        ['Day', 'Hours']                    ];                    $.each(data, function (i, item) {                        chartData.push([item.responsesId.toString(),                        item.optionsId]);                    });                    var chartDataTable = google.visualization.                        arrayToDataTable(chartData);                    var chartOptions = {                        title: "Hours spent per day",                        hAxis: {                            title: 'Hours',                            minValue: 0                        },                        vAxis: {                            title: 'Week Days'                        }                    };                    var chart = new google.visualization.PieChart                        (document.getElementById('myPieChart'));                    chart.draw(chartDataTable, chartOptions);                };
-                options.error = function () {                    $("#msg").html("<h2>Error while using Google Charts!</h2 > ");                };                $.ajax(options);
+                options.dataType = "json";
+
+                options.success = function (data) {
+                    var chartData = [
+                        ['Day', 'Hours']
+                    ];
+                    $.each(data, function (i, item) {
+                        chartData.push([item.responsesId.toString(),
+                        item.optionsId]);
+                    });
+                    var chartDataTable = google.visualization.
+                        arrayToDataTable(chartData);
+                    var chartOptions = {
+                        title: "Hours spent per day",
+                        hAxis: {
+                            title: 'Hours',
+                            minValue: 0
+                        },
+                        vAxis: {
+                            title: 'Week Days'
+                        }
+                    };
+                    var chart = new google.visualization.PieChart
+                        (document.getElementById('myPieChart'));
+                    chart.draw(chartDataTable, chartOptions);
+                };
+                options.error = function () {
+                    $("#msg").html("<h2>Error while using Google Charts!</h2 > ");
+                };
+                $.ajax(options);
 
 
 
