@@ -234,6 +234,8 @@ namespace Survey_Project.Controllers
 
             var data = _context.Responses.ToList();
             return Json(data);
+
+            //deserialize 
         }
 
 

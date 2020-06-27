@@ -13,14 +13,14 @@
             function drawChart() {
                 // Define the chart to be drawn.
                 var options = {};
-                options.url = '@Url.Action("GetChartData","Admin")';
+                options.url = '@Url.Action("GetChartData","Admin")' ;
                         @*new { id = 0 }*@
                 options.type = "GET";
                 options.dataType = "json";
 
                 options.success = function (data) {
                     var chartData = [
-                        ['Day', 'Hours']
+                        ['Option', 'Choice']
                     ];
                     $.each(data, function (i, item) {
                         chartData.push([item.responsesId.toString(),
@@ -29,13 +29,13 @@
                     var chartDataTable = google.visualization.
                         arrayToDataTable(chartData);
                     var chartOptions = {
-                        title: "Hours spent per day",
+                        title: "Customer Satisfaction",
                         hAxis: {
-                            title: 'Hours',
+                            title: 'Rate your experience',
                             minValue: 0
                         },
                         vAxis: {
-                            title: 'Week Days'
+                            title: ''
                         }
                     };
                     var chart = new google.visualization.PieChart

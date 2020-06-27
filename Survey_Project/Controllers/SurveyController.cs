@@ -157,14 +157,28 @@ namespace Survey_Project.Controllers
         // POST: Survey/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(QuestionViewModel qvm)
+        public ActionResult Edit(QuestionViewModel qvm, int id)
         {
+            qvm.Question.SurveyId = id;
 
             if (ModelState.IsValid)
             {
-                
-                //_context.Update();
-                _context.SaveChangesAsync();
+                var updateQuestion = qvm.Question.QuestionString;
+                _context.Update(updateQuestion);
+
+                var updateOptionOne = qvm.OptionOne;
+                _context.Update(updateOptionOne);
+
+                var updateOptionTwo = qvm.OptionTwo;
+                _context.Update(updateOptionTwo);
+
+                var updateOptionThree = qvm.OptionThree;
+                _context.Update(updateOptionThree);
+
+                var updateOptionFour = qvm.OptionFour;
+                _context.Update(updateOptionFour);
+
+                _context.SaveChanges();
 
             }
             return RedirectToAction("Index", "Admin");
