@@ -70,15 +70,74 @@
                     // Set options .
                     var options = {
                         title: 'Results from Last Quarter',
-                        width: 400,
-                        height: 300
+                        width: 600,
+                        height: 500
                     };
 
-                    // Instantiate and draw the chart for Sarah's pizza.
+                    // Instantiate and draw the chart for Quarterly chart.
                     var chart = new google.visualization.PieChart(document.getElementById('quarterlyChart'));
                     chart.draw(data, options);
                 }
 
+
+            //Quarter results chart
+
+            // Callback that draws the pie chart.
+            function compareFirstQuarter() {
+
+                // Create the data table .
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Satisfaction');
+                data.addColumn('number', 'rate');
+                data.addRows([
+                    ['Excellent', 4],
+                    ['Good', 2],
+                    ['Fair', 1],
+                    ['Poor', 0],
+
+                ]);
+
+                // Set options .
+                var options = {
+                    title: 'Results from 2019 - First Quarter',
+                    width: 400,
+                    height: 300
+                };
+
+                // Instantiate and draw the chart for Quarterly chart.
+                var chart = new google.visualization.PieChart(document.getElementById('compareFirstQuarter'));
+                chart.draw(data, options);
+            }
+
+
+            //Quarter results chart
+
+            // Callback that draws the pie chart.
+            function compareSecondQuarter() {
+
+                // Create the data table .
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'Satisfaction');
+                data.addColumn('number', 'rate');
+                data.addRows([
+                    ['Excellent', 1],
+                    ['Good', 2],
+                    ['Fair', 3],
+                    ['Poor', 1],
+
+                ]);
+
+                // Set options .
+                var options = {
+                    title: 'Results from 2020 - First Quarter',
+                    width: 400,
+                    height: 300
+                };
+
+                // Instantiate and draw the chart for Quarterly chart.
+                var chart = new google.visualization.PieChart(document.getElementById('compareSecondQuarter'));
+                chart.draw(data, options);
+            }
 
             
         </script>
@@ -86,22 +145,19 @@
 </head>
 <body>
     <section>
+        <h1> Results from the most recent quarter:</h1>
         <!-- Identify where the chart should be drawn. -->
         <div id="myPieChart" style="width:40%; height:30%"></div>
-        <div id="quarterlyChart" style="width:40%; height:30%"></div>
-    </section>
+        <div id="quarterlyChart" style="width:60%; height:50%"></div>
+        </section>
     <section>
+        <h2>Results compared to the previous year:</h2>
+        <div id="compareFirstQuarter" style="width:40%; height:30%"></div>
+        <div id="compareSecondQuarter" style="width:40%; height:30%"></div>
     </section>
+ 
 </body>
 
-@*//var data = new google.visualization.DataTable();
-    //data.addColumn('string', 'Element');
-    //data.addColumn('number', 'Percentage');
-    //data.addRows([
-    //    ['Nitrogen', 0.78],
-    //    ['Oxygen', 0.21],
-    //    ['Other', 0.01]
-    //]);*@
 
 
 
