@@ -211,7 +211,14 @@ namespace Survey_Project.Controllers
 
             _context.Responses.Add(response);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Thankyou");
+        }
+
+        public ActionResult Thankyou()
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var customer = _context.Customers.Where(c => c.IdentityUserId == userId).FirstOrDefault();
+            return View(customer);
         }
 
     }

@@ -9,11 +9,14 @@
         <script>
             google.charts.load('current', { packages: ['corechart'] });
             google.charts.setOnLoadCallback(drawChart);
+            google.charts.setOnLoadCallback(quarterResults);
+            google.charts.setOnLoadCallback(compareFirstQuarter);
+            google.charts.setOnLoadCallback(compareSecondQuarter);
 
             function drawChart() {
                 // Define the chart to be drawn.
                 var options = {};
-                options.url = '@Url.Action("GetChartData","Admin")' ;
+                options.url = '@Url.Action("GetChartData","Admin")';
                         @*new { id = 0 }*@
                 options.type = "GET";
                 options.dataType = "json";
@@ -23,8 +26,8 @@
                         ['Option', 'Choice']
                     ];
                     $.each(data, function (i, item) {
-                        chartData.push([item.QuestionString,
-                        item.QuestionId]);
+                        chartData.push([item.responsesId.toString(),
+                        item.optionsId]);
                     });
                     var chartDataTable = google.visualization.
                         arrayToDataTable(chartData);
@@ -46,9 +49,63 @@
                     $("#msg").html("<h2>Error while using Google Charts!</h2 > ");
                 };
                 $.ajax(options);
+            }
+                //Quarter results chart
+
+                // Callback that draws the pie chart.
+                function quarterResults() {
+
+                    // Create the data table .
+                    var data = new google.visualization.DataTable();
+                    data.addColumn('string', 'Satisfaction');
+                    data.addColumn('number', 'rate');
+                    data.addRows([
+                        ['Excellent', 3],
+                        ['Good', 1],
+                        ['Fair', 2],
+                        ['Poor', 1],
+       
+                    ]);
+
+                    // Set options .
+                    var options = {
+                        title: 'Results from Last Quarter',
+                        width: 400,
+                        height: 300
+                    };
+
+                    // Instantiate and draw the chart for Sarah's pizza.
+                    var chart = new google.visualization.PieChart(document.getElementById('quarterlyChart'));
+                    chart.draw(data, options);
+                }
+
+
+            
+        </script>
+    </div>
+</head>
+<body>
+    <section>
+        <!-- Identify where the chart should be drawn. -->
+        <div id="myPieChart" style="width:40%; height:30%"></div>
+        <div id="quarterlyChart" style="width:40%; height:30%"></div>
+    </section>
+    <section>
+    </section>
+</body>
+
+@*//var data = new google.visualization.DataTable();
+    //data.addColumn('string', 'Element');
+    //data.addColumn('number', 'Percentage');
+    //data.addRows([
+    //    ['Nitrogen', 0.78],
+    //    ['Oxygen', 0.21],
+    //    ['Other', 0.01]
+    //]);*@
 
 
 
+@*maybe related?
 
                 //var jsonData = $.ajax({
                 //    url: "jdbc:sqlserver://localhost;integratedSecurity=true;",
@@ -65,21 +122,4 @@
 
                 //var piechart = new google.visualization.PieChart(document
                 //    .getElementById('myPieChart'));
-                //piechart.draw(data, piechart_options);
-            }
-        </script>
-    </div>
-</head>
-<body>
-    <!-- Identify where the chart should be drawn. -->
-    <div id="myPieChart" style="width:40%; height:30%"></div>
-</body>
-
-   @*//var data = new google.visualization.DataTable();
-            //data.addColumn('string', 'Element');
-            //data.addColumn('number', 'Percentage');
-            //data.addRows([
-            //    ['Nitrogen', 0.78],
-            //    ['Oxygen', 0.21],
-            //    ['Other', 0.01]
-            //]);*@
+                //piechart.draw(data, piechart_options);*@

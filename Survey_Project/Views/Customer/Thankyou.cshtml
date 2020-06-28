@@ -1,0 +1,24 @@
+﻿@model Survey_Project.Models.Customer
+@{
+    ViewData["Title"] = "Thankyou";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<center>
+<h1> @Html.DisplayFor(model => model.FirstName),</h1>
+
+<p>
+    We appreciate the time you took to fill out this survey.<br />
+<p>
+<p>
+    See you soon!<br />
+</p>
+    -Sincerly,
+<br />
+<h4>Jane's Tea Shop</h4>
+</p>
+<br />
+
+    <Footer>
+        <img src="~/Images/Thankyou.jpg" width="500" height="300" style="vertical-align:top">
+    </Footer>
+</center>
