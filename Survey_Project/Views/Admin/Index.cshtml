@@ -7,14 +7,16 @@
 }
 
 
-    <body style=" background-image: url('../Images/dashboard1.jpg'); background-repeat: no-repeat; background-size: cover;">
+    <body style=" background-image: url('../Images/dashboard2.png'); background-repeat: no-repeat; background-size: cover;">
         <center>
-            <h1>Good Afternoon, Admin!</h1>
-            <p>Surveys should be sent no later than 5 P.M. daily</p>
+            <h1>Jane's Tea Shop</h1>
+            <hr />
+            <h3>Good Afternoon, Admin!</h3>
+            <p>Reminder, that surveys should be sent no later than 5 P.M. daily</p>
 
         </center>
 
-        <p style="margin-left: 2.5em;padding: 0 7em 2em 0;border-width: 2px; border-color: black; border-style:solid;">Example of a paragraph with margin and padding.</p>
+       
         <section class>
             <table class="table">
                 <thead>
@@ -53,7 +55,7 @@
                                 |<a asp-controller="Survey" asp-action="Edit" asp-route-id="@item.SurveyId">Edit</a> |
                                 @*<a asp-controller="Survey" asp-action="Details" asp-route-id="@item.SurveyId">Details</a>|*@
                                 <a asp-controller="Survey" asp-action="Delete" asp-route-id="@item.SurveyId">Delete</a>|
-                                <a asp-controller="Admin" asp-action="ChooseCustomer" asp-route-id="@item.SurveyId">Send Survey</a>|
+                                <a asp-controller="Admin" asp-action="ChooseCustomer" asp-route-id="@item.SurveyId">Send</a>|
                             </td>
                         </tr>
                     }
@@ -62,11 +64,13 @@
         </section>
         <section>
             <div>
-                <a asp-controller="Survey" asp-action="Create">Create Survey</a>
-                <a asp-controller="Admin" asp-action="AddClient">Add Client</a>
-                <a asp-controller="Admin" asp-action="GoogleCharts">View Chart</a>
-                <a asp-controller="Admin" asp-action="AddClient">Add Client</a>
-                <a asp-controller="Admin" asp-action="Compare">Compare</a>
+               |||    <a asp-controller="Admin" asp-action="AddClient">Add Client</a>   |||
+
+                <a asp-controller="Survey" asp-action="Create">Create Survey</a>   |||
+
+                <a asp-controller="Admin" asp-action="GoogleCharts">View Charts</a>   |||
+
+                @*<a asp-controller="Admin" asp-action="Compare">Compare</a>*@
                 @*<a asp-controller="Admin" asp-action="SendMail"> Send Email</a>*@
 
             </div>
