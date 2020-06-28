@@ -63,6 +63,19 @@ body {
   background-color: #fff;
 }
 
+#IndexContainer {
+    color: black !important;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#IndexContainer {
+    background-color: lightgray !important;
+    width: 50%;
+    text-align: center;
+}
+
 [tabindex="-1"]:focus {
   outline: 0 !important;
 }
