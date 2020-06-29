@@ -214,12 +214,7 @@ namespace Survey_Project.Controllers
             return View(allCustomers);
         }
 
-        public ActionResult Compare(string FirstSelection)
-        {
-            var selectedQuarter = _context.Surveys.Where(s => s.Quarter == FirstSelection).ToList();
-
-            return View(selectedQuarter);
-        }
+   
 
 
         public ActionResult GoogleCharts()
@@ -227,7 +222,7 @@ namespace Survey_Project.Controllers
             return View();
         }
 
-        public IActionResult GetChartData()
+        public ActionResult GetChartData()
         {
             //var x = _context.Responses.Where( r=> r.OptionsId )
 
@@ -240,9 +235,28 @@ namespace Survey_Project.Controllers
             //deserialize ????
         }
 
+        public ActionResult GetQuarter(string selectedQuarter)
+        {
+            var thisQuarter = _context.Surveys.Where(q => q.Quarter == selectedQuarter);
+            //find results of that quarter
+            return Json(thisQuarter);
+        }
+
+        //public ActionResult Compare(string firstSelection, string secondSelection)
+        //{
+
+        //    // user selected quarter1 & quarter 2
+        //    var firstdQuarter = _context.Surveys.Where(s => s.Quarter == firstSelection).ToList();
+        //    var secondQuarter = _context.Surveys.Where(s => s.Quarter == secondSelection).ToList();
+        //    //list results from each survey 
+        //    return Json();
+            
+        //}
+
+              
 
         // email mailkit stuff
-
+         
         public ActionResult SendMail()
         {
 
